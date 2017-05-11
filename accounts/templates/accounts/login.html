@@ -8,6 +8,11 @@
 
 <form method="POST" action="{% url 'accounts:login' %}">
   {% csrf_token %}
+
+  {% if request.GET.next %}
+  <input type="hidden" name="next" value="{{ request.GET.next }}">
+  {% endif%}
+
   username
   <br>
   <input type="text" name="username" value="">
