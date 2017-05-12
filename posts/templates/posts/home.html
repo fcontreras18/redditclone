@@ -6,9 +6,16 @@
 
 {% for post in posts.all %}
 
-<a>UP</a> {{ post.votes_total }} <a>DOWN</a> - <a href="{{ post.url }}" target="_blank">{{ post.title }}</a>
+<form method="POST" action="{% url 'posts:upvote' post.id %}">
+  {% csrf_token %}
+  <input type="submit" value="UP">
+</form> {{ post.votes_total }}  - <a href="{{ post.url }}" target="_blank">{{ post.title }}</a>
 <br>
 {{ post.pub_date }} by {{ post.author.username }}
 <br>
-<br>
+<form method="POST" action="{% url 'posts:downvote' post.id %}">
+  {% csrf_token %}
+  <input type="submit" value="DOWN">
+</form>
+
 {% endfor %}
