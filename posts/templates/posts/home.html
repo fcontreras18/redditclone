@@ -1,5 +1,14 @@
-Homepage
+<h1>The Homepage of nowhere</h1>
+<a href="{% url 'posts:create' %}">new post</a>
 
-{% for post in posts %}
-{{ posts.post }}
+<br>
+<br>
+
+{% for post in posts.all %}
+
+<a>UP</a> {{ post.votes_total }} <a>DOWN</a> - <a href="{{ post.url }}" target="_blank">{{ post.title }}</a>
+<br>
+{{ post.pub_date }} by {{ post.author.username }}
+<br>
+<br>
 {% endfor %}

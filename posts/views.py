@@ -1,20 +1,20 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
-from . import models
+from .models import Posts
 
 
 @login_required
 def create(request):
     if request.method == 'POST':
         if request.POST['title'] and request.POST['url']:
-            post = models.Posts()
+            post = Posts()
             post.title = request.POST['title']
             post.url = request.POST['url']
             post.pub_date = timezone.datetime.now()
             post.author = request.user
             post.save()
-            return render(request, 'posts/home.html')
+            return redirect('home')
         else:
             return render(request, 'posts/create.html', {'error':
                 'ERROR: You must include a title and a URL to create a post'})
@@ -23,4 +23,5 @@ def create(request):
 
 
 def home(request):
-    return render(request, 'posts/home.html')
+    posts = Posts.objects.order_by('votes_total')
+    return render(request, 'posts/home.html', {'posts':posts})
