@@ -14,5 +14,13 @@ def create(request):
             post.pub_date = timezone.datetime.now()
             post.author = request.user
             post.save()
+            return render(request, 'posts/home.html')
+        else:
+            return render(request, 'posts/create.html', {'error':
+                'ERROR: You must include a title and a URL to create a post'})
     else:
         return render(request, 'posts/create.html')
+
+
+def home(request):
+    return render(request, 'posts/home.html')
