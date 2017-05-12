@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+
 <h1>The Homepage of nowhere</h1>
 <a href="{% url 'posts:create' %}">new post</a>
 
@@ -17,5 +20,6 @@
   {% csrf_token %}
   <input type="submit" value="DOWN">
 </form>
-
+<br>
 {% endfor %}
+{% endblock %}
