@@ -12,30 +12,32 @@
 <table>
 	<tr>
 		<td>
-			<span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
-			<br>{{ post.votes_total }}<br>
-			<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+			<a href="#" onClick="document.getElementById('upvote{{ post.id }}').submit()">
+				<span class="glyphicon glyphicon-arrow-up" aria-hidden="true" style="padding-right: 20px; color: blue;"></span>
+			</a>
+			<br><strong style="padding-left: 3px;">{{ post.votes_total }}</strong><br>
+			<a href="#" onClick="document.getElementById('downvote{{ post.id }}').submit()">
+			<span class="glyphicon glyphicon-arrow-down" aria-hidden="true" style="color: red;"></span>
+			</a>
 		</td>
 		<td>
 			<a href="{{ post.url }}" target="_blank">{{ post.title }}</a>
-			<br>{{ post.pub_date }} by {{ post.author.username }}			
+			<br>{{ post.pub_date_pretty }} by {{ post.author.username }}			
 		</td>
 	</tr>	
 	<br>
 </table>
 
+<form id="upvote{{ post.id }}" method="POST" action="{% url 'posts:upvote' post.id %}">
+{% csrf_token %}
+	<input type="hidden"> 
+</form>
+
+<form id="downvote{{ post.id }}" method="POST" action="{% url 'posts:downvote' post.id %}">
+  {% csrf_token %}
+  <input type="hidden">
+</form>
 
 
 {% endfor %}
 {% endblock %}
-
-
-<form method="POST" action="{% url 'posts:upvote' post.id %}">
-{% csrf_token %}
-	<input type="submit" value="UP"> 
-</form>
-
-<form method="POST" action="{% url 'posts:downvote' post.id %}">
-  {% csrf_token %}
-  <input type="submit" value="DOWN">
-</form>
