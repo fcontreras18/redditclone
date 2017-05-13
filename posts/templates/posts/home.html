@@ -2,24 +2,40 @@
 {% block content %}
 
 <h1>The Homepage of nowhere</h1>
-<a href="{% url 'posts:create' %}">new post</a>
+<a class="btn btn-success" href="{% url 'posts:create' %}">new post</a>
 
 <br>
 <br>
 
 {% for post in posts.all %}
 
+<table>
+	<tr>
+		<td>
+			<span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+			<br>{{ post.votes_total }}<br>
+			<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+		</td>
+		<td>
+			<a href="{{ post.url }}" target="_blank">{{ post.title }}</a>
+			<br>{{ post.pub_date }} by {{ post.author.username }}			
+		</td>
+	</tr>	
+	<br>
+</table>
+
+
+
+{% endfor %}
+{% endblock %}
+
+
 <form method="POST" action="{% url 'posts:upvote' post.id %}">
-  {% csrf_token %}
-  <input type="submit" value="UP">
-</form> {{ post.votes_total }}  - <a href="{{ post.url }}" target="_blank">{{ post.title }}</a>
-<br>
-{{ post.pub_date }} by {{ post.author.username }}
-<br>
+{% csrf_token %}
+	<input type="submit" value="UP"> 
+</form>
+
 <form method="POST" action="{% url 'posts:downvote' post.id %}">
   {% csrf_token %}
   <input type="submit" value="DOWN">
 </form>
-<br>
-{% endfor %}
-{% endblock %}
