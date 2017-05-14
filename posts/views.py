@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from .models import Posts
+from django.contrib.auth.models import User
 
 
 @login_required
@@ -44,3 +45,9 @@ def downvote(request, pk):
         post.votes_total -= 1
         post.save()
         return redirect('home')
+
+
+def userposts(request, fk):
+    posts = Posts.objects.filter(author__id=fk).order_by('pub_date')
+    author = User.objects.get(pk=fk)
+    return render(request, 'posts/userposts.html', {'posts': posts, 'author': author})

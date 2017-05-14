@@ -1,10 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>The Homepage of nowhere</h1>
-<a class="btn btn-success" href="{% url 'posts:create' %}">new post</a>
-
-<br>
+<h1>{{ author.username }}'s posts</h1>
 <br>
 
 {% for post in posts.all %}
@@ -37,7 +34,6 @@
   {% csrf_token %}
   <input type="hidden">
 </form>
-
 
 {% endfor %}
 {% endblock %}

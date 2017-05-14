@@ -31,7 +31,7 @@
         <div class="collapse navbar-collapse" id="mynav">
           <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
-            <li><a>hello, {{ post.author.username }}</a></li>
+            <li><a href="{% url 'posts:userposts' user.id %}">hello, {{ request.user.username }}</a></li>
             <li><a href="#" onClick="document.getElementById('logout').submit()">Logout</a></li>
             <form id="logout" method="POST" action="{% url 'accounts:logout' %}">
               {% csrf_token %}
